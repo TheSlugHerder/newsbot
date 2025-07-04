@@ -1,0 +1,19 @@
+<info>
+  <id>newsbot</id>
+  <name>NewsBot</name>
+  <summary>Automated RSS News Poster for Talk</summary>
+  <description>Fetches news from RSS feeds and posts summaries to configured Talk rooms.</description>
+  <version>0.1.0</version>
+  <namespace>NewsBot</namespace>
+  <category>tools</category>
+  <author>Your Name</author>
+  <dependencies>
+    <nextcloud min-version="27" max-version="29"/>
+  </dependencies>
+  <settings>
+    <admin>OCA\NewsBot\Settings\Admin</admin>
+  </settings>
+  <background-jobs>
+    <job>OCA\NewsBot\BackgroundJob\FetchNews</job>
+  </background-jobs>
+</info>

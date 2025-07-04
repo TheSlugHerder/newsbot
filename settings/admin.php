@@ -1,0 +1,1 @@
+OCP\App::registerAdmin('newsbot', 'admin/settings');
