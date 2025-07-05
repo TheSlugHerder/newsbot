@@ -1,1 +1,19 @@
-{}
+{
+  "name": "your/newsbot",
+  "description": "Automated RSS News Poster for Nextcloud Talk",
+  "type": "project",
+  "license": "AGPL-3.0",
+  "require": {
+    "php": "^8.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "OCA\\NewsBot\\": "lib/"
+    }
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "echo 'NewsBot dependencies installed.'"
+    ]
+  }
+}
