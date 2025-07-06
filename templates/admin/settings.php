@@ -1,3 +1,4 @@
+<?PHP
 // HTML/PHP settings UI included in original canvas above
 // templates/admin/settings.php
 script('newsbot', 'settings');
@@ -17,7 +18,9 @@ $markdown = $config->getAppValue('newsbot', 'markdown', 'no');
     <label>RSS Feed URLs (comma-separated)</label>
     <input type="text" name="feeds" value="<?= $feeds ?>" />
     <label>Talk Room Tokens (comma-separated)</label>
-    <input type="text" name="rooms" value="<?= $rooms ?>" />
+    <select name="rooms[]" id="talk-rooms-select" multiple>
+        <!-- Populated via JS -->
+    </select>
     <label>Bot Display Name</label>
     <input type="text" name="botname" value="<?= $botname ?>" />
     <label>Post Interval (hours)</label>
@@ -36,11 +39,35 @@ $markdown = $config->getAppValue('newsbot', 'markdown', 'no');
   </form>
 </div>
 <script>
+document.addEventListener('DOMContentLoaded', () => {
+  fetch(OC.generateUrl('/apps/newsbot/settings/rooms'))
+    .then(r => r.json())
+    .then(data => {
+      const select = document.getElementById('talk-rooms-select');
+      if (!data.ocs || !data.ocs.data) return;
+
+      const selectedRooms = "<?= $rooms ?>".split(',');
+
+      data.ocs.data.forEach(room => {
+        const opt = document.createElement('option');
+        opt.value = room.token;
+        opt.textContent = `${room.displayName} (${room.token})`;
+        if (selectedRooms.includes(room.token)) {
+          opt.selected = true;
+        }
+        select.appendChild(opt);
+      });
+    });
+});
 document.getElementById('newsbot-form').addEventListener('submit', function(e) {
   e.preventDefault();
-  const data = new FormData(this);
+  const form = new FormData(this);
+  const selectedRooms = Array.from(document.getElementById('talk-rooms-select').selectedOptions)
+                             .map(opt => opt.value)
+                             .join(',');
+  form.set('rooms', selectedRooms);
   fetch(OC.generateUrl('/apps/newsbot/settings/save'), {
-    method: 'POST', body: data
+    method: 'POST', body: form
   }).then(() => alert('Saved.'));
 });
 document.getElementById('newsbot-postnow').addEventListener('click', function() {

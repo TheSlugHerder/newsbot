@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\appinfo",
+    "\\lib",
+    "\\lib\\BackgroundJob",
+    "\\lib\\Controller",
+    "\\lib\\Service",
+    "\\settings",
+    "\\templates",
+    "\\templates\\admin"
+  ],
+  "SelectedNode": "\\appinfo",
+  "PreviewInSolutionExplorer": false
+}
