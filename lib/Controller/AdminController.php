@@ -34,7 +34,8 @@ class AdminController extends Controller {
   public function getRooms(): JSONResponse {
     $botuser = 'newsbot';
     $apppass = 'changeme'; // Consider securing this via config or secret store
-    $url = 'https://your-nextcloud-domain/ocs/v2.php/apps/spreed/api/v1/room';
+    $baseUrl = \OC::$server->getURLGenerator()->getAbsoluteURL('/');
+    $url = rtrim($baseUrl, '/') . '/ocs/v2.php/apps/spreed/api/v1/room';
     $headers = ['OCS-APIRequest: true'];
 
     $ch = curl_init();
